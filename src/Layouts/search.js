@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from "./header"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {getAPI } from './API'
 
 function getCookie(cname) {
   var name = cname + "=";
@@ -8,22 +8,17 @@ function getCookie(cname) {
   var ca = decodedCookie.split(';');
   for(var i = 0; i <ca.length; i++) {
     var c = ca[i];
-    while (c.charAt(0) == ' ') {
+    while (c.charAt(0) === ' ') {
       c = c.substring(1);
     }
-    if (c.indexOf(name) == 0) {
+    if (c.indexOf(name) === 0) {
       return c.substring(name.length, c.length);
     }
   }
   return "";
 }
 
-function setCookie(cname, cvalue, exdays) {
-  var d = new Date();
-  d.setTime(d.getTime() + (exdays*60*60*1000));
-  var expires = "expires="+ d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
+
 
 class Search extends React.Component {
   
@@ -31,7 +26,8 @@ class Search extends React.Component {
     super(props);
     this.state = {
       artist: [],
-      search: ''
+      search: '',
+      user: getCookie("user")
     };
   }
   
@@ -42,13 +38,13 @@ class Search extends React.Component {
 
   HandleChange = (event) => {
     let url =  "https://api.spotify.com/v1/search?q=" + event.target.value +  "&type=artist"  
-    if (event.target.value != ''){
+    if (event.target.value !== ''){
       const requestOptions = {
         method: 'get',
         headers: { 
           'Content-Type': 'application/json', 
           'Accept':'application/json',
-          'Authorization':'Bearer BQAcx_EC9DCrNSbULkzbalcrQvaUz2mSrXnyVzTSHjo8-vj8y4Xs9hmIDC_sS-ngVXjlJ7ZZakavswT2xzsJoFlQiPTJK21gy4uvHWOGcuwcl5As8pSq0g3HvD2dy3aXzjcWYV-pDUZmZu_muPbUsTiE0eIrKRDQdZPJ075LYNV0UYX4SmljZBC4PAnaGNnNkXKy4TDiPWjOKdDlsBckLTvAwvGBX09sa67fZW6tEA6t9-oVGYBXEGtOY41I6-EW9eTtsqdJD8x2_4PefY7azOIP00MRJemwnwvMK4rKx53o' }    
+          'Authorization':'Bearer ' + getAPI() }    
         };
       fetch(url, requestOptions)
       .then(response => {return response.json()})
@@ -81,7 +77,7 @@ class Search extends React.Component {
             <a href={"./artist/" + result.id}>
               <div class="card edited">
             {result.images.map((val,key)=>(
-                  key == 1? <img height="200px" className="card-img-top"  src={val.url}/> : ''
+                  key === 1? <img height="200px" className="card-img-top" alt="artist_picture"  src={val.url}/> : ''
                 ))}
               <div class="card-body">
                 <h5 class="card-title">{result.name}</h5>

@@ -9,9 +9,9 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useParams
 } from "react-router-dom";
+
+require('dotenv').config()
 
 export default function App() {
   return (
@@ -23,7 +23,7 @@ export default function App() {
             renders the first one that matches the current URL. */}
         <Switch>
 
-        <Route path="/artist/:artistId" children={<User />} >
+        <Route path="/artist/:artistId" >
             <Album />
           </Route>
 
@@ -41,10 +41,7 @@ export default function App() {
       </div>
     </Router>
   );
-  function User() {
-    let { id } = useParams();
-    return <h2>User {id}</h2>;
-  }
+  
 }
 
 

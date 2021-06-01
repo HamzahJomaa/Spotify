@@ -19,6 +19,11 @@
   text-align: left;
 }
 
+.icon{
+  position: relative;
+  right: -40%;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 50px;

@@ -1,5 +1,5 @@
 import React from 'react';
-import $ from 'jquery'; 
+import {getAPI} from './API'
 
 
 
@@ -21,7 +21,7 @@ class Body extends React.Component {
             headers: { 
               'Content-Type': 'application/json', 
               'Accept':'application/json',
-              'Authorization':'Bearer BQAcx_EC9DCrNSbULkzbalcrQvaUz2mSrXnyVzTSHjo8-vj8y4Xs9hmIDC_sS-ngVXjlJ7ZZakavswT2xzsJoFlQiPTJK21gy4uvHWOGcuwcl5As8pSq0g3HvD2dy3aXzjcWYV-pDUZmZu_muPbUsTiE0eIrKRDQdZPJ075LYNV0UYX4SmljZBC4PAnaGNnNkXKy4TDiPWjOKdDlsBckLTvAwvGBX09sa67fZW6tEA6t9-oVGYBXEGtOY41I6-EW9eTtsqdJD8x2_4PefY7azOIP00MRJemwnwvMK4rKx53o' }    
+              'Authorization':'Bearer ' + getAPI() }    
             };
           fetch(url, requestOptions)
           .then(response => {return response.json()})
@@ -32,7 +32,7 @@ class Body extends React.Component {
                 headers: { 
                   'Content-Type': 'application/json', 
                   'Accept':'application/json',
-                  'Authorization':'Bearer BQAcx_EC9DCrNSbULkzbalcrQvaUz2mSrXnyVzTSHjo8-vj8y4Xs9hmIDC_sS-ngVXjlJ7ZZakavswT2xzsJoFlQiPTJK21gy4uvHWOGcuwcl5As8pSq0g3HvD2dy3aXzjcWYV-pDUZmZu_muPbUsTiE0eIrKRDQdZPJ075LYNV0UYX4SmljZBC4PAnaGNnNkXKy4TDiPWjOKdDlsBckLTvAwvGBX09sa67fZW6tEA6t9-oVGYBXEGtOY41I6-EW9eTtsqdJD8x2_4PefY7azOIP00MRJemwnwvMK4rKx53o' }    
+                  'Authorization':'Bearer ' + getAPI() }    
                 };
               fetch(url, requestOptions)
               .then(response => {return response.json()})
@@ -59,7 +59,7 @@ class Body extends React.Component {
                 {this.state.albums? this.state.albums.map((result,key)=>(
                     <div class="card edited">
                   {result.images.map((val,key)=>(
-                        key == 1? <img height="200px" className="card-img-top"  src={val.url}/> : ''
+                        key === 1? <img height="200px" className="card-img-top" alt="album_picture"  src={val.url}/> : ''
                       ))}
                     <div class="card-body">
                       <h5 class="card-title">{result.name}</h5>
