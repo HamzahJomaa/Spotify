@@ -1,5 +1,5 @@
 # Getting Started with Create React App
-
+# Make sure to Edit src/Layouts/API.js for Api Token
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
