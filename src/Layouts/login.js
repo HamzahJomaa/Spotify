@@ -3,8 +3,8 @@ import $ from 'jquery';
 import {getAPI} from './API'
 
 function login(callback) {
-  var CLIENT_ID = '6b284830006843e7ae7b170725715aed';
-  var REDIRECT_URI = 'http://jmperezperez.com/spotify-oauth-jsfiddle-proxy/';
+  var CLIENT_ID = 'ad8e87bfab9e4df19fb2d8690cbab07c';
+  var REDIRECT_URI = 'http://localhost:3000/callback';
   function getLoginURL(scopes) {
       return 'https://accounts.spotify.com/authorize?client_id=' + CLIENT_ID +
         '&redirect_uri=' + encodeURIComponent(REDIRECT_URI) +
@@ -28,10 +28,16 @@ function login(callback) {
       }
   }, false);
   
-  window.open(url,
+  var w = window.open(url,
                       'Spotify',
                       'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left
                      );
+  
+  w.addEventListener('load', () => {
+    console.log(w.document);
+    
+});             
+  
   
 }
 let accessToken = getAPI()
@@ -55,13 +61,10 @@ class Body extends React.Component {
 
 
     handleClick = () => {
-      login((result)=>{
-        console.log(result)
-      });
+      login();
       getUserData(accessToken)
       .then(function(response) {
         setCookie("user",JSON.stringify(response),5)
-        console.log(response)
         window.location.assign("./search")
         });
     }
