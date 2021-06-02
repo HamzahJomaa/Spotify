@@ -1,6 +1,21 @@
 import React from 'react';
-import {getAPI} from './API'
 
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
 
 
 class Body extends React.Component {
@@ -12,6 +27,7 @@ class Body extends React.Component {
             artist: []
         }
     }
+    
 
     componentDidMount(){
         
@@ -21,7 +37,7 @@ class Body extends React.Component {
             headers: { 
               'Content-Type': 'application/json', 
               'Accept':'application/json',
-              'Authorization':'Bearer ' + getAPI() }    
+              'Authorization':'Bearer ' + getCookie('Token') }    
             };
           fetch(url, requestOptions)
           .then(response => {return response.json()})
@@ -32,14 +48,14 @@ class Body extends React.Component {
                 headers: { 
                   'Content-Type': 'application/json', 
                   'Accept':'application/json',
-                  'Authorization':'Bearer ' + getAPI() }    
+                  'Authorization':'Bearer ' + getCookie('Token') }    
                 };
               fetch(url, requestOptions)
               .then(response => {return response.json()})
               .then(_artist => {
-                console.log(res['items'])
                 this.setState({ albums: res['items']})    
                 this.setState({ artist: _artist})   
+                console.log(this.state.artist)
               })
               
           })
@@ -49,29 +65,29 @@ class Body extends React.Component {
   
     render() {
        return (
-        <div>
-            <h1>Artist Name: {this.state.artist.name}</h1>
+        <div className="main-wrapper">
+          <div className="artist_name">
+
+              <h3>Artist: <span className="artist">{this.state.artist.name}</span></h3>
+          </div>
+          <hr />
           <div className="grid-container">
-
-
-
-
                 {this.state.albums? this.state.albums.map((result,key)=>(
-                    <div class="card edited">
+                    <div className="card edited">
                   {result.images.map((val,key)=>(
-                        key === 1? <img height="200px" className="card-img-top" alt="album_picture"  src={val.url}/> : ''
+                        key === 1? <img height="200px" className="card-img-left" alt="album_picture"  src={val.url}/> : ''
                       ))}
-                    <div class="card-body">
-                      <h5 class="card-title">{result.name}</h5>
-                      <p class="card-text">{this.state.artist.name}</p>
+                    <div className="card-body">
+                      <h5 className="card-title">{result.name}</h5>
+                      <p className="card-text">{this.state.artist.name}</p>
                     </div>
-                    <div class="card-body">
+                    <div className="card-body">
                      
                     {result.release_date}<br/>
                     {result.total_tracks} tracks
 
                     </div>
-                    <a href={result.external_urls.spotify} class="card-footer">
+                    <a href={result.external_urls.spotify} className="card-footer">
                       Preview on Spotify
                     </a>
                   </div>

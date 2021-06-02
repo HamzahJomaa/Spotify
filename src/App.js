@@ -4,6 +4,7 @@ import Header from "./Layouts/header"
 import Login from "./Layouts/login"
 import Search from "./Layouts/search"
 import Album from "./Layouts/albums"
+import Callback from "./Layouts/callback"
 
 import {
   BrowserRouter as Router,
@@ -27,6 +28,10 @@ export default function App() {
             <Album />
           </Route>
 
+          <Route path="/callback">
+            <Callback />
+          </Route>
+
           <Route path="/search">
             <Search />
           </Route>
@@ -34,6 +39,8 @@ export default function App() {
           <Route path="/">
             <Login />
           </Route>
+
+          
 
 
         </Switch>

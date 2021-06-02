@@ -15,13 +15,22 @@
 
 .edited{
   width: 18rem;
-  margin: 20px;
+  margin: 10px;
   text-align: left;
+}
+
+.artist_name{
+  text-align: left;
+  margin-top: 10px;
+}
+
+.artist{
+  color: #1ed760;
 }
 
 .icon{
   position: relative;
-  right: -40%;
+  right: -30%;
 }
 
 .App-header {
@@ -36,14 +45,47 @@
   color: white;
 }
 
-.search,.login{
-  margin-top: 10%;
+.col-2 label{
+  font-size: 25px;
+}
+
+.card-title{
+  margin-bottom: 0;
+}
+
+.search-box{
+  position: relative;
+  top: 20px;
+}
+
+.close-button,.search,.login{
   background-color: transparent;
   border: 1px solid gray;
   outline: none;
-  border-radius: 30px;
+  border-radius: 10px;
   height: 50px;
-  width: 25%;
+  width: 15%;
+}
+
+.close-button{
+  width: 100%;
+}
+
+.close-button:hover,.login:hover{
+  background-color: grey;
+}
+
+.wrapper:after {
+  font-family: 'Font Awesome 5 Free';
+  color:red;
+  position: relative;
+  left: -30px;
+  content: "\f002 ";
+}
+
+.main-wrapper{
+  width: 50%;
+  margin-left: 25%;
 }
 
 .App-link {
@@ -118,8 +160,7 @@
 
 .grid-container {
   position: relative;
-  left: 20%;
-  width: 60%;
+  width: 100%;
   display: grid;
   grid-template-columns: auto auto auto;
   padding: 10px;

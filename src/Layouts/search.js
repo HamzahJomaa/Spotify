@@ -1,6 +1,5 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {getAPI } from './API'
 
 function getCookie(cname) {
   var name = cname + "=";
@@ -32,9 +31,6 @@ class Search extends React.Component {
   }
   
 
-  callAPI= () =>{
-    
-  }
 
   HandleChange = (event) => {
     let url =  "https://api.spotify.com/v1/search?q=" + event.target.value +  "&type=artist"  
@@ -44,7 +40,7 @@ class Search extends React.Component {
         headers: { 
           'Content-Type': 'application/json', 
           'Accept':'application/json',
-          'Authorization':'Bearer ' + getAPI() }    
+          'Authorization':'Bearer ' + getCookie("Token") }    
         };
       fetch(url, requestOptions)
       .then(response => {return response.json()})
@@ -62,40 +58,43 @@ class Search extends React.Component {
 
     render() {
        return (
-        <header>
-          <h1>Please Search for an Artist</h1>
-          <input type="text" onChange={this.HandleChange} placeholder="Search Here" className="search" />
-
-          <div className="grid-container">
-
-
-          
-
-          {this.state.artist? this.state.artist.map((result,key)=>(
-
-
-            <a href={"./artist/" + result.id}>
-              <div class="card edited">
-            {result.images.map((val,key)=>(
-                  key === 1? <img height="200px" className="card-img-top" alt="artist_picture"  src={val.url}/> : ''
-                ))}
-              <div class="card-body">
-                <h5 class="card-title">{result.name}</h5>
-                <p class="card-text"><p>{result.followers.total} follwers</p></p>
+          <div className="main-wrapper">
+              
+              <div className="wrapper search-box">  
+                <div className="row"> 
+                  <div className="col-2">
+                    <label for="search">Artist Name</label>
+                  </div>
+                  <div className="col-10">
+                  <input type="text" id="search" onChange={this.HandleChange} placeholder="Search for an artist…" className="form-control search" />
+                  </div>
+                </div>
               </div>
-            </div>
-            </a>
+              <div className="grid-container">
+              {this.state.artist? this.state.artist.map((result,key)=>(
+                <a href={"./artist/" + result.id}>
+                  <div class="card edited">
+                {result.images.map((val,key)=>(
+                      key === 1? <img height="200px" className="card-img-top" alt="artist_picture"  src={val.url}/> : ''
+                    ))}
+                  <div class="card-body">
+                    <h5 class="card-title">{result.name}</h5>
+                    <p class="card-text"><p>{result.followers.total} follwers</p></p>
+                  </div>
+                </div>
+                </a>
 
-          )):''}
+              )):''}
+              </div>
           </div>
           
-        {/* <h1>{this.state.artist? return(<Header/>):''}</h1> */}
-        </header>
        );
     }
 
     
   }
+
+  
 
 
 

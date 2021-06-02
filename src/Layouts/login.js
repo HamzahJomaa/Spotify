@@ -1,6 +1,5 @@
 import React from 'react';
 import $ from 'jquery'; 
-import {getAPI} from './API'
 
 function login(callback) {
   var CLIENT_ID = 'ad8e87bfab9e4df19fb2d8690cbab07c';
@@ -28,21 +27,20 @@ function login(callback) {
       }
   }, false);
   
-  var w = window.open(url,
+  console.log(url)
+  const w = window.open(url,
                       'Spotify',
                       'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left
                      );
   
-  w.addEventListener('load', () => {
-    console.log(w.document);
-    
-});             
-  
+
+    w.addEventListener('onload',()=>{
+      console.log(w.document.body.innerText)
+    })
+
   
 }
-let accessToken = getAPI()
 function getUserData(accessToken) {
-  console.log("get user")
   return $.ajax({
       url: 'https://api.spotify.com/v1/me',
       headers: {
@@ -56,13 +54,28 @@ function setCookie(cname, cvalue, exdays) {
   var expires = "expires="+ d.toUTCString();
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
 
 class Body extends React.Component {
 
 
     handleClick = () => {
       login();
-      getUserData(accessToken)
+      getUserData(getCookie("Token"))
       .then(function(response) {
         setCookie("user",JSON.stringify(response),5)
         window.location.assign("./search")
@@ -73,10 +86,12 @@ class Body extends React.Component {
     render() {
        return (
         <div>
-          {process.env.API_KEY}
-          <button onClick={this.handleClick} className="login">
-            Login
-            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" className="icon" width="30pt" height="30pt" viewBox="0 0 170.05 170.05">
+          <div className="wrapper search-box">  
+                <div className="row"> 
+                  <div className="col">
+                  <button type="button" onClick={this.handleClick} className="btn btn-light login">Login
+                  
+                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" className="icon" width="30pt" height="30pt" viewBox="0 0 170.05 170.05">
               <g>
               <g id="Layer-1" data-name="Layer 1">
               <clipPath id="cp0">
@@ -88,7 +103,12 @@ class Body extends React.Component {
               </g>
               </g>
               </svg>
-          </button>
+                  </button>
+
+                     </div>
+                </div>
+              </div>
+          
 
         </div>
        );
