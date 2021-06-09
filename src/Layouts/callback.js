@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery'; 
 
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
@@ -6,7 +7,14 @@ function setCookie(cname, cvalue, exdays) {
     var expires = "expires="+ d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
-
+  function getUserData(token) {
+    return $.ajax({
+        url: 'https://api.spotify.com/v1/me',
+        headers: {
+           'Authorization': 'Bearer ' + token
+        }
+    });
+  }
 class callback extends React.Component {
     constructor(props){
         super(props)
@@ -14,21 +22,24 @@ class callback extends React.Component {
             url : window.location.href.split('=')
         }
     }
+    
 
     componentDidMount(){
         setCookie("Token",this.state.url[this.state.url.length - 3],"2")
+        console.log(this.state.url[this.state.url.length - 3],"2")
+        getUserData(this.state.url[this.state.url.length - 3],"2")
+        .then(function(response) {
+            console.log(response)
+            setCookie("user",JSON.stringify(response),5)
+            window.location.assign("./search")
+            });
     }
-    close(){
-        window.close()
-    }
+    
 
     render() {
         return (
          <div>
-             <h3>Successfully Logged In</h3>
-             <button className="close-button" onClick={this.close}>
-               Close Window  
-             </button>
+             
          </div>
         );
      }

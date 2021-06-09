@@ -19,6 +19,14 @@
   text-align: left;
 }
 
+.maxWidth{
+  max-width: 20;
+}
+.media{
+  background-size:contain !important;
+  height: 150px;
+}
+
 .artist_name{
   text-align: left;
   margin-top: 10px;
@@ -58,20 +66,23 @@
   top: 20px;
 }
 
-.close-button,.search,.login{
-  background-color: transparent;
+.close-button,.search{
   border: 1px solid gray;
   outline: none;
   border-radius: 10px;
   height: 50px;
   width: 15%;
 }
+.login{
+  width: 15%;
+
+}
 
 .close-button{
   width: 100%;
 }
 
-.close-button:hover,.login:hover{
+.close-button:hover{
   background-color: grey;
 }
 
@@ -83,7 +94,7 @@
   content: "\f002 ";
 }
 
-.main-wrapper{
+.search-result,.main-wrapper{
   width: 50%;
   margin-left: 25%;
 }

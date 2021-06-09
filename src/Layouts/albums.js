@@ -1,4 +1,13 @@
 import React from 'react';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
 
 
 function getCookie(cname) {
@@ -55,7 +64,7 @@ class Body extends React.Component {
               .then(_artist => {
                 this.setState({ albums: res['items']})    
                 this.setState({ artist: _artist})   
-                console.log(this.state.artist)
+                console.log(this.state.albums)
               })
               
           })
@@ -64,41 +73,46 @@ class Body extends React.Component {
     
   
     render() {
-       return (
-        <div className="main-wrapper">
-          <div className="artist_name">
-
-              <h3>Artist: <span className="artist">{this.state.artist.name}</span></h3>
-          </div>
-          <hr />
-          <div className="grid-container">
-                {this.state.albums? this.state.albums.map((result,key)=>(
-                    <div className="card edited">
-                  {result.images.map((val,key)=>(
-                        key === 1? <img height="200px" className="card-img-left" alt="album_picture"  src={val.url}/> : ''
-                      ))}
-                    <div className="card-body">
-                      <h5 className="card-title">{result.name}</h5>
-                      <p className="card-text">{this.state.artist.name}</p>
-                    </div>
-                    <div className="card-body">
-                     
-                    {result.release_date}<br/>
-                    {result.total_tracks} tracks
-
-                    </div>
-                    <a href={result.external_urls.spotify} className="card-footer">
-                      Preview on Spotify
-                    </a>
-                  </div>
-
-
-
-
-                )):''}
-            </div>
-        </div>
-       );
+       return (        
+       <Grid container style={{flexGrow: 1}}>
+        <Grid item xs={5} style={{ textAlign: 'center', position:'relative', left:'25%'}}>
+          <Grid container justify="center" >        
+          {this.state.albums? this.state.albums.map((result,key)=>(
+            <Grid key={key} item style={{margin: 20}}>
+            <Card>
+            
+            <CardActionArea>
+            
+            {result.images.map((val,key)=>(
+                        key === 1?
+                        <CardMedia
+                        style={{ height: 140 }}
+                image={val.url}
+                title="Contemplative Reptile"
+              />: ''  ))}
+              
+              <CardContent style={{width:'355px'}}>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {result.name}
+                </Typography>
+                
+              </CardContent>
+            </CardActionArea>
+            
+            <CardActions>
+              <Link href={result.external_urls.spotify} target='_blank'>
+              <Button size="small" color="primary">
+                Preview on Spotify
+              </Button>
+              </Link>
+              
+            </CardActions>
+            </Card>
+          </Grid>
+      )):''}
+      </Grid>
+      </Grid>
+      </Grid>);
     }
   }
 
